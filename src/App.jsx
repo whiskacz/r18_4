@@ -4,21 +4,25 @@ import {useEffect, useState} from 'react';
 const App = () => {
 
   const [stan, setStan] = useState(data)
-  const [inputValue, setInputValue] = ("")
+  const [inputValue, setInputValue] = useState("")
 
 
+  const filterFunction = () => {
+    const newState = stan.filter((element, inputValue) => {
+      return element.name === inputValue})
+      setStan(newState)
+  }
   
-console.log(data)
+const handleChange = (e) => {
+  setInputValue(e.target.value)
+  filterFunction()
+}
  
-useEffect(()=>{
-  const newState = stan.filter((element) => {element.name !== inputValue})
-    setStan(newState)
-},[inputValue])
 
 return (
   <>
-  <form action="" onSubmit={(e)=> {e.preventDefault()}}></form>
-    <input type="text" value={inputValue} onChange={(e)=>setInputValue(e.target.value)} />
+  <form action="" onSubmit={(e)=> {e.preventDefault()}}>
+    <input type="text" value={inputValue} onChange={handleChange} />
     {stan.map((element) => {
       return (
       <div key={element.id}>
@@ -31,6 +35,7 @@ return (
       </div>
     )})}
     <div>zbiór ma : {stan.length}</div>
+    </form>
   </>
 )};
 export default App;
